@@ -1,0 +1,288 @@
+﻿html, body{
+    margin: 0;
+    height: 100%;
+    min-height: 100%;
+    background-color: #111111;
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.8) 10px,
+      rgba(0, 0, 0, 0.95) 10px,
+      rgba(0, 0, 0, 0.95) 20px
+    );
+    font-size-adjust:2;
+    text-size-adjust:auto;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+h1{
+    padding:0px;
+    margin:0px;
+    display:inline;
+    float:left;
+    cursor:pointer;
+    width:auto;
+    text-size-adjust:auto;
+    font-size-adjust:inherit;
+}
+
+h3{
+    display:inline;
+}
+
+p{
+    display:inline;
+    font-family: Arial;
+    font-size: smaller;
+}
+
+.youtube{
+    width:100%;
+    height:100%;
+}
+
+p.date{
+    font-size:small;
+    margin-left:1em;
+}
+
+.mainContainer {
+    top:0;
+    left:10%;
+    right:10%;
+    position:fixed;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+
+    height:100%;
+    font-size-adjust:inherit;
+    text-size-adjust:auto;
+}
+
+.header{
+    position:absolute;
+    flex:none;
+    height: 2em;
+    right:0em;
+    left:0em;
+    padding: 0.5em;
+    padding-left:1em;
+    background-color: rgba(0, 62, 81, 0.90);
+    text-align:center;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+}
+
+.rightContainer{
+    top:3em;
+    width:10em;
+    bottom:10%;
+    margin:auto;
+    background-color: rgba(29, 96, 117, 0.90);
+    right: 1em;
+    position:absolute;
+    float: right;
+    padding: 0.5em;
+    text-align:center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    flex: auto;
+}
+
+.content{
+    width:auto;
+    bottom:10%;
+    right:0em;
+    left:0em;
+    position:absolute;
+    top:3em;
+    float:right;
+    background-color: rgba(78, 149, 170, 0.90);
+    padding: 1em;
+    /*border-left:solid;
+    border-left-color: #ffffff;*/
+}
+
+.footer{
+    flex:none;
+    bottom:0px;
+    height:10%;
+    background-color:rgba(0, 62, 81, 0.90);
+    position:absolute;
+    right:0em;
+    left:0em;
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+}
+
+.header .button{
+    margin-right:1em;
+}
+.button{
+    min-width:5em;
+    float:right;
+    position:relative;
+    width:auto;
+    padding: 0.4em 0.5em 0.0em 0.5em;
+    height:1.5em;
+    cursor: pointer;
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 10;
+    -moz-border-radius: 10;
+    border-radius: 0.5em;
+    font-family: Arial;
+    font-size:17px;
+    color: #ffffff;
+    border: solid #1f628d 1px;
+    text-decoration: none;
+}
+
+.button:hover{
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+.button:active{
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 10;
+    -moz-border-radius: 10;
+    border-radius: 0.5em;
+    font-family: Arial;
+    color: #ffffff;
+    border: solid #1f628d 1px;
+    text-decoration: none;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.dropdown:active{
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+    
+}
+
+.dropdown div{
+    float:none;
+}
+
+.dropdowncontainer{
+    float:none;
+    left:-9999px;
+    
+    background:rgba(255, 255, 255, 0);
+    position:absolute;
+    padding:0.2em;
+    cursor: default;
+    z-index:1;
+}
+
+.dropdowncontainer .button{
+    width:auto;
+    min-width:100%;
+}
+
+.dropdown:hover .dropdowncontainer{
+    left:0;
+    margin-top:0.0em;
+}
+
+.dropdown:hover .button{
+    left:0;
+    margin-top:0.2em;
+    width:15em;
+    background:#6b0c36;
+    background-image: -webkit-linear-gradient(top, #b02462, #aa054e);
+    background-image: -moz-linear-gradient(top, #b02462, #aa054e);
+    background-image: -ms-linear-gradient(top, #b02462, #aa054e);
+    background-image: -o-linear-gradient(top, #b02462, #aa054e);
+    background-image: linear-gradient(to bottom, #b02462, #aa054e);
+}
+
+.dropdown:hover div .button:hover{
+    background:#6b0c36;
+    background-image: -webkit-linear-gradient(top, #6b0c36, #aa054e);
+    background-image: -moz-linear-gradient(top, #6b0c36, #aa054e);
+    background-image: -ms-linear-gradient(top, #6b0c36, #aa054e);
+    background-image: -o-linear-gradient(top, #6b0c36, #aa054e);
+    background-image: linear-gradient(to bottom, #6b0c36, #aa054e);
+}
+
+.dropdown:hover div .button:active{
+    background: #6b0c36;
+    background-image: -webkit-linear-gradient(top, #aa054e, #6b0c36);
+    background-image: -moz-linear-gradient(top, #aa054e, #6b0c36);
+    background-image: -ms-linear-gradient(top, #aa054e, #6b0c36);
+    background-image: -o-linear-gradient(top, #aa054e, #6b0c36);
+    background-image: linear-gradient(to bottom, #aa054e, #6b0c36);
+    -webkit-border-radius: 10;
+    -moz-border-radius: 10;
+    border-radius: 0.5em;
+    font-family: Arial;
+    color: #ffffff;
+    border: solid #1f628d 1px;
+    text-decoration: none;
+}
+
+.garage{
+    background-color: #888888;
+    padding:1em;
+    height:auto;
+    width:auto;
+    float:left;
+}
+.garage div{
+    display:inline;
+}
+.garage p{
+    color:white;
+}
+.garage .lot{
+    float:left;
+    background-color: #777777;
+    width:5em;
+    height:7em;
+    margin: 0 1em;
+    padding:1em;
+}
+
+.lot .vehicle{
+    float:left;
+    background-color: #222222;
+    width:100%;
+    height:100%;
+}
+
