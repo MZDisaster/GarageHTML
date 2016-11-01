@@ -92,6 +92,7 @@ p.date{
     position:relative;
     top:0em;
     display:inline;
+    border:none;
 }
 
 .headerLogoImage{
@@ -100,6 +101,7 @@ p.date{
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    border:none;
 }
 
 .headerLogoDisc{
@@ -113,6 +115,7 @@ p.date{
     font-size:xx-large;
     color: #000000;
     display:inline;
+    border:none;
 }
 
 .navbar{
@@ -168,8 +171,8 @@ p.date{
     float:right;
     padding: 1em;
     overflow:auto;
-    margin-right: -100px;
-    padding-right: 100px;
+    margin-right: -2em;
+    padding-right: 2em;
     /*border-left:solid;
     border-left-color: #ffffff;*/
 }
