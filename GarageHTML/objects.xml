@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Garages>
+  <Garage Type="Garage.Garage`1[Garage.Airplane]" Space="55" Name="planesgarage">
+    <Vehicle Type="Garage.Airplane" Color="blue" Wheels="55" RegNr="234234234" />
+    <Vehicle Type="Garage.Airplane" Color="asdf" Wheels="23" RegNr="234234234" />
+    <Vehicle Type="Garage.Airplane" Color="jj" Wheels="66" RegNr="234234234" />
+    <Vehicle Type="Garage.Airplane" Color="blue" Wheels="22" RegNr="234234234" />
+    <Vehicle Type="Garage.Airplane" Color="blo" Wheels="34" RegNr="23423423" />
+    <Vehicle Type="Garage.Airplane" Color="red" Wheels="33" RegNr="234234234" />
+    <Vehicle Type="Garage.Airplane" Color="green" Wheels="23" RegNr="234234234" />
+    <Vehicle Type="Garage.Airplane" Color="bb" Wheels="23" RegNr="234234" />
+  </Garage>
+  <Garage Type="Garage.Garage`1[Garage.Airplane]" Space="11" Name="pl1" />
+  <Garage Type="Garage.Garage`1[Garage.Airplane]" Space="11" Name="pl2" />
+  <Garage Type="Garage.Garage`1[Garage.Airplane]" Space="22" Name="pl3" />
+  <Garage Type="Garage.Garage`1[Garage.Airplane]" Space="33" Name="pl4" />
+  <Garage Type="Garage.Garage`1[Garage.Airplane]" Space="55" Name="pl5" />
+  <Garage Type="Garage.Garage`1[Garage.Airplane]" Space="66" Name="pl6" />
+  <Garage Type="Garage.Garage`1[Garage.Airplane]" Space="77" Name="pl7" />
+  <Garage Type="Garage.Garage`1[Garage.Airplane]" Space="88" Name="pl8" />
+  <Garage Type="Garage.Garage`1[Garage.Airplane]" Space="99" Name="pl9" />
+  <Garage Type="Garage.Garage`1[Garage.Boat]" Space="73" Name="boatsgarage">
+    <Vehicle Type="Garage.Boat" Color="asdf" Wheels="9" RegNr="234234" />
+  </Garage>
+  <Garage Type="Garage.Garage`1[Garage.Car]" Space="55" Name="carsgarageeeee" />
+  <Garage Type="Garage.Garage`1[Garage.Motorcycle]" Space="55" Name="motoaaaaa" />
+</Garages>

@@ -12,6 +12,8 @@
     );
     font-size-adjust:2;
     text-size-adjust:auto;
+    cursor:default;
+    overflow:hidden;
 }
 
 body {
@@ -55,28 +57,76 @@ p.date{
     left:10%;
     right:10%;
     position:fixed;
-    border-top-left-radius: 0.5em;
-    border-top-right-radius: 0.5em;
     border-bottom-left-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
     min-width:40em;
     height:100%;
     font-size-adjust:inherit;
     text-size-adjust:auto;
+    align-content:center;
+    overflow:hidden;
 }
 
 .header{
     position:absolute;
     flex:none;
-    height: 2em;
+    height: auto;
     right:0em;
     left:0em;
     padding: 0.5em;
     padding-left:1em;
-    background-color: rgba(0, 62, 81, 0.90);
+    background-color: rgba(31, 81, 96, 1);
     text-align:center;
-    border-top-left-radius: 0.5em;
-    border-top-right-radius: 0.5em;
+    align-content:center;
+    z-index:1;
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+}
+
+.headerLogo{
+    align-content:center;
+    height: 25em;
+    max-height: 700px;
+    width:100%;
+    float:left;
+    position:relative;
+    top:0em;
+    display:inline;
+}
+
+.headerLogoImage{
+    width:100%;
+    height:100%;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.headerLogoDisc{
+    top:-3.14em;
+    float:left;
+    position:relative;
+    background-color: rgba(0, 0, 0, 0.4);
+    height:3em;
+    width:100%;
+    text-align:center;
+    font-size:xx-large;
+    color: #000000;
+    display:inline;
+}
+
+.navbar{
+    position:absolute;
+    padding-left:1em;
+    background-color:rgb(0, 46, 81);
+    top:0em;
+    left:0em;
+    right:0em;
+    text-align:center;
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    z-index:1;
+    align-content:center;
 }
 
 .rightContainer{
@@ -95,17 +145,31 @@ p.date{
     flex: auto;
 }
 
+.contentContainer{
+    width:auto;
+    right:0em;
+    left:0em;
+    top:2em;
+    bottom:10%;
+    position:absolute;
+    float:right;
+    background-color: rgba(78, 149, 170, 0.80);
+    padding: 0em;
+    /*border-left:solid;
+    border-left-color: #ffffff;*/
+}
+
 .content{
     width:auto;
-    bottom:10%;
+    height:100%;
     right:0em;
     left:0em;
     position:absolute;
-    top:3em;
     float:right;
-    background-color: rgba(78, 149, 170, 0.90);
     padding: 1em;
-    overflow-y:auto;
+    overflow:auto;
+    margin-right: -100px;
+    padding-right: 100px;
     /*border-left:solid;
     border-left-color: #ffffff;*/
 }
@@ -122,9 +186,26 @@ p.date{
     border-bottom-right-radius: 0.5em;
 }
 
-.header .button{
-    margin-right:1em;
+.navbar .button{
+    min-width:5em;
+    float:left;
+    position:relative;
+    width:auto;
+    padding: 0.7em 0.5em 0.0em 0.5em;
+    height:2em;
+    cursor: pointer;
+    background: rgba(7, 68, 88, 0.00); /*#3498db*/
+    -webkit-border-radius: 10;
+    -moz-border-radius: 10;
+    border-radius: 0em;
+    font-family: Arial;
+    font-size:17px;
+    color: #bbbbbb;
+    border: none;
+    border-right: solid #1f628d 1px;
+    text-decoration: none;
 }
+
 .button{
     min-width:5em;
     float:right;
@@ -133,7 +214,7 @@ p.date{
     padding: 0.4em 0.5em 0.0em 0.5em;
     height:1.5em;
     cursor: pointer;
-    background: #3498db;
+    background: #004651; /*#3498db*/
     background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
     background-image: -moz-linear-gradient(top, #3498db, #2980b9);
     background-image: -ms-linear-gradient(top, #3498db, #2980b9);
@@ -159,6 +240,7 @@ p.date{
     text-decoration: none;
 }
 
+
 .button:active{
     background: #3498db;
     background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
@@ -168,10 +250,8 @@ p.date{
     background-image: linear-gradient(to bottom, #3498db, #2980b9);
     -webkit-border-radius: 10;
     -moz-border-radius: 10;
-    border-radius: 0.5em;
     font-family: Arial;
     color: #ffffff;
-    border: solid #1f628d 1px;
     text-decoration: none;
 }
 
@@ -203,12 +283,12 @@ p.date{
 .dropdowncontainer{
     float:none;
     left:-9999px;
-    
     background:rgba(255, 255, 255, 0);
     position:absolute;
     padding:0.2em;
     cursor: default;
     z-index:1;
+    opacity: 0;
 }
 
 .dropdowncontainer .button{
@@ -219,7 +299,12 @@ p.date{
 .dropdown:hover .dropdowncontainer{
     left:0;
     margin-top:0.0em;
+    opacity: 1;
+   transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
 }
+
 
 .dropdown:hover .button{
     left:0;
@@ -233,6 +318,7 @@ p.date{
     background-image: linear-gradient(to bottom, #b02462, #aa054e);
 }
 
+
 .dropdown:hover div .button:hover{
     background:#6b0c36;
     background-image: -webkit-linear-gradient(top, #6b0c36, #aa054e);
@@ -240,6 +326,21 @@ p.date{
     background-image: -ms-linear-gradient(top, #6b0c36, #aa054e);
     background-image: -o-linear-gradient(top, #6b0c36, #aa054e);
     background-image: linear-gradient(to bottom, #6b0c36, #aa054e);
+}
+
+.fade {
+   opacity: 0;
+   transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
+}
+
+.unfade{
+    
+    opacity: 1;
+   transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
 }
 
 .dropdown:hover div .button:active{

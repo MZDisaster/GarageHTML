@@ -65,7 +65,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="aboutus.html" />
+    <Content Include="footer.html" />
+    <Content Include="HtmlPage1.html" />
     <Content Include="index.html" />
+    <Content Include="script.js" />
     <Content Include="style.css" />
     <Content Include="video2.html" />
     <Content Include="video3.html" />
@@ -73,6 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
