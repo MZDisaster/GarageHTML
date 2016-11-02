@@ -117,6 +117,7 @@ p.date{
     position:relative;
     float:left;
     overflow:auto;
+    text-align:center;
 }
 
 #AboutUs1{

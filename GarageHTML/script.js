@@ -1,12 +1,14 @@
-﻿// JavaScript source code
+﻿/// <reference path="C:\Users\MZALK\Source\Repos\GarageHTML\GarageHTML\Scripts/jquery-3.1.1.js" />
+// JavaScript source code
+var topPosition = $(window).scrollTop();
 var Garages = [];
-var Vehicles = [];
+var SelectedGarageIndex = null;
 var OldHeight = $("#Home1").height();
 var OldWidth = $("#Home1").height();
 var scrolledTo = 'Home';
 var rtime;
 var timeout = false;
-var delta = 200;
+var delta = 0;
 var selectedLot = null;
 var lotsCount = 0;
 
@@ -36,7 +38,7 @@ function loadMovies() {
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == XMLHttpRequest.DONE) {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                ParseMovies(this);
+                ParseGarages(this);
                 //document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
             }
             else if (xmlhttp.status == 400) {
@@ -52,21 +54,32 @@ function loadMovies() {
     xmlhttp.send();
 }
 
-function ParseMovies(xml) {
+function ParseGarages(xml) {
     var xmlDoc = xml.responseXML;
     var garageNodes = xmlDoc.getElementsByTagName("Garage");
     //console.log(garageNodes[0]);
+    
     for (var i = 0; i < garageNodes.length; i++) {
-        for (var j = 0; j < garageNodes[i].getElementsByTagName("Vehicle").length; j++) {
-            /*
-            console.log(garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("Type").toString().match(/\.(.*)/)[1].toString());
-            console.log(garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("Color").toString());
-            console.log(garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("Wheels").toString());
-            console.log(garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("RegNr").toString());
-            */
+        var Vehicles = [];
+        for (var j = 0; j < garageNodes[i].getElementsByTagName("Vehicle").length; j++) // garage vehicles
+        { 
+            Vehicles.push(new Vehicle(garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("Type").toString().match(/\.(.*)/)[1].toString(), garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("Color").toString(), parseInt(garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("Wheels").toString()), garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("RegNr").toString()));
         }
-        //Garages.push(new Garage(garageNodes[i].getAttribute("Name").toString(),
-        console.log(garageNodes[i].getAttribute("Name").toString());
+        var garageType = garageNodes[i].getAttribute("Type").toString().match(/\[(.*)/)[1].match(/\.(.*)/)[1].match(/[^\]]+/).toString(); // garage type parsed with RegEx
+        var garageSpace = parseInt(garageNodes[i].getAttribute("Space")); // Garage Size
+        var garageName = garageNodes[i].getAttribute("Name").toString(); // Garage Name
+
+        Garages.push(new Garage(garageType,
+            garageSpace,
+            garageName,
+            Vehicles));
+
+        $('#GaragesDropdown').html($('#GaragesDropdown').html() + "<div id=\"garage" + i + "\" class=\"button garageButton\" data-size=\"" + garageSpace + "\" data-index=\"" + i + "\">" + garageName + "</div>");
+
+        //addVehicle();
+        //Vehicles.length = 0;
+
+        //console.log(garageNodes[i].getAttribute("Name").toString());
         //new Garage();
         //garageNodes[i].getElementsByTagName("Date")[0].childNodes[0].nodeValue.toString().trim(),
         //garageNodes[i].getElementsByTagName("Discreption")[0].childNodes[0].nodeValue.toString().trim(),
@@ -77,14 +90,33 @@ function ParseMovies(xml) {
 }
 
 function LoadPage() {
-    for (var i = 0; i < movies.length; i++) {
-        document.getElementById("movieselectdropdown").innerHTML += "<div id=\"button" + i + "\" class=\"button movieButton\">" + movies[i].title + "</div>";
-    }
+    jQuery.each(Garages, function (i, val) {
+        var garagee = this;
 
-    for (var i = 0; i < movies.length; i++) {
+        $('#garage' + i).click(function (event) {
+            $('#garage').html('');
 
-    }
+            jQuery.each($('.lot'), function (i, val) {
+                $(this).html('');
+            });
 
+            SelectedGarageIndex = parseInt($(this).data('index'));
+            lotsCount = 0;
+            for (var j = 0; j < garagee.size ; j++) {
+                addLot();
+            }
+            //var index = $(this).data('index');
+            /*
+            jQuery.each(Garages[SelectedGarageIndex].vehicles, function (k, val) {
+                //console.log(k);
+                selectedLot = "lot" + k;
+            });
+            */
+            showVehicles();
+        });
+    });
+
+    /*
     var buttons = document.getElementsByClassName("movieButton");
     for (b in buttons) {
         if (buttons.hasOwnProperty(b)) {
@@ -92,12 +124,12 @@ function LoadPage() {
                 setHTMLtoMovie(this.id);
             }, false);
         }
-    }
+    }*/
 
-    document.getElementById("movieTitle").innerHTML = movies[0].title;
-    document.getElementById("movieDate").innerHTML = movies[0].date;
-    document.getElementById("movieDiscription").innerHTML = movies[0].disctiption;
-    document.getElementById("movieYoutube").setAttribute("src", movies[0].link);
+    //document.getElementById("movieTitle").innerHTML = movies[0].title;
+    //document.getElementById("movieDate").innerHTML = movies[0].date;
+    //document.getElementById("movieDiscription").innerHTML = movies[0].disctiption;
+    //document.getElementById("movieYoutube").setAttribute("src", movies[0].link);
 }
 
 function addLot(){
@@ -123,12 +155,31 @@ function addLot(){
 function addVehicle() {
     if (selectedLot != null)
     {
-        $('#' + selectedLot).html('<div class="vehicle"><div/>');
-        Vehicles.push(new Vehicle("car", "white", "12", "asdf444"));
+        if ($('#' + selectedLot + " .vehicle").length < 1)
+        {
+            $('#' + selectedLot).html('<div class="vehicle"><div/>');
+            Garages[SelectedGarageIndex].vehicles.push(new Vehicle("car", "white", "12", "asdf444", parseInt(selectedLot.match(/\d+/)[0])));
+            $('#' + selectedLot).css({ 'background-color': 'rgba(30, 30, 30, 0.20)' });
+        }
+        else
+            alert("Lot already contains vehicle!");
     }
     else
         alert("You must select a lot first!");
+
     selectedLot = null;
+}
+
+function showVehicles() {
+    jQuery.each(Garages[SelectedGarageIndex].vehicles, function (k, val) {
+        //console.log(k);
+        //selectedLot = "lot" + k;
+        if (this.lotnr > 0)
+            $('#lot' + this.lotnr).html('<div class="vehicle"><div/>');
+        else
+            $('#lot' + k).html('<div class="vehicle"><div/>');
+    });
+    console.log(Garages[SelectedGarageIndex].vehicles);
 }
 
 function loadscript() {
@@ -160,7 +211,7 @@ function loadscript() {
                     'fast',
                     "swing",
                     function(){ 
-                        //alert("animation complete! - your custom code here!"); 
+                        // animation complete
                     }
                 );
                 scrolledTo = event.target.id;
@@ -238,6 +289,9 @@ function DynamicSizingAndPositioning() {
     $('.leftContentContainer').css({ 'top': $('.navbar').height() - 15, 'height': $(window).height() - $('.footer').height() - $('.navbar').height() + 15, 'padding-top': $('.navbar').height() + 50 } );
     $('.garageContent').css({ 'top': $('.navbar').height(), 'height': $(window).height() - $('.footer').height() - $('.navbar').height(), 'width': $('.contentContainer').width() - $('.leftContainer').width(), 'left': $('.leftContainer').width() });
     
+   // $(window).scrollTop(topPosition);
+    $('#contentWithLogo').scrollTop($('#contentWithLogo').height);
+
     //garageContent
 
 }
@@ -269,12 +323,13 @@ function Garage(type, size, name, vehicles)
     this.vehicles = vehicles;
 }
 
-function Vehicle(type, color, wheels,regnr)
+function Vehicle(type, color, wheels, regnr, lotnr)
 {
     this.type = type;
     this.color = color;
     this.wheels = wheels;
     this.regnr = regnr;
+    this.lotnr = lotnr;
 }
 
 function movie(title, date, discription, link) {
