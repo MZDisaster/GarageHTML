@@ -44,21 +44,6 @@ body {
   flex-direction: column;
 }
 
-h1{
-    padding:0px;
-    margin:0px;
-    display:inline;
-    float:left;
-    cursor:pointer;
-    width:auto;
-    text-size-adjust:auto;
-    font-size-adjust:inherit;
-}
-
-h3{
-    display:inline;
-}
-
 p{
     display:inline;
     font-family: Arial;
@@ -101,7 +86,7 @@ p.date{
     background-color: rgba(31, 81, 96, 1);
     text-align:center;
     align-content:center;
-    z-index:999;
+    z-index:970;
 }
 
 .headerLogo{
@@ -119,7 +104,7 @@ p.date{
     background-size:cover;
     background-position-x:center;
     box-shadow: 0 0 1em 1em rgba(0, 0, 0, 0.5) inset;
-    z-index:2;
+    z-index:900;
     border-bottom-left-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
     overflow:hidden;
@@ -255,7 +240,7 @@ p.date{
     right:0em;
     bottom:0px;
     text-align:center;
-    z-index:1;
+    z-index:910;
     align-content:center;
 }
 
@@ -267,12 +252,17 @@ p.date{
         rgb(0, 21, 81)
         
     );
-    position:absolute;
-    float: right;
+    position:relative;
+    float: left;
     height:100%;
     text-align:center;
     -webkit-overflow-scrolling: touch;
-    flex: auto;
+    display:flex;
+    flex-flow:column nowrap;
+}
+
+.leftContainer * {
+    max-width:90%;
 }
 
 .leftContentContainer{
@@ -287,6 +277,7 @@ p.date{
       rgba(0, 0, 0, 0.04) 10px,
       rgba(0, 0, 0, 0.04) 20px
     );
+    max-width:10em;
 }
 
 .contentContainer{
@@ -333,7 +324,11 @@ p.date{
     bottom:0px;
     right:0em;
     left:0em;
-    background-color:rgba(0, 62, 81, 1);
+    background: linear-gradient(
+        0deg,
+        rgb(0, 20, 81),
+        rgb(0, 46, 81)
+    );
     border-bottom-left-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
     text-align:center;
@@ -389,6 +384,7 @@ p.date{
     color: #ffffff;
     border: solid #1f628d 1px;
     text-decoration: none;
+    text-align:center;
 }
 
 .button:hover{
@@ -408,7 +404,7 @@ p.date{
     background-image: -moz-linear-gradient(top, #3498db, #2980b9);
     background-image: -ms-linear-gradient(top, #3498db, #2980b9);
     background-image: -o-linear-gradient(top, #3498db, #2980b9);
-    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    background-image: linear-gradient(to top, #3498db, #2980b9);
     -webkit-border-radius: 10;
     -moz-border-radius: 10;
     font-family: Arial;
@@ -444,21 +440,37 @@ p.date{
 .dropdowncontainer{
     float:none;
     left:-9999px;
-    background:rgba(255, 255, 255, 0.4);
+    top:100%;
+    background-color: #bbbbbb;
+    /*background:rgba(255, 255, 255, 1);*/
     position:absolute;
     cursor: default;
-    z-index:4;
+    z-index:920;
     opacity: 0;
 }
 
+.garageButton{
+    color:#222222;
+}
+.garageButton:hover{
+    background-color:  #1f628d;
+}
+.garageButton:active{
+    background-color:  #3cb0fd;
+}
+
+
 .dropdowncontainer .button{
     width:50%;
-    z-index:3;
+    z-index:950;
     margin:0;
 }
 
 .dropdown:hover .dropdowncontainer{
     left:0;
+    right:0;
+    text-align:left;
+    z-index:940;
     margin-top:0.0em;
     opacity: 1;
    transition: opacity .25s ease-in-out;
@@ -527,13 +539,13 @@ p.date{
     float:left;
     position:absolute;
     overflow-y:auto;
-    z-index: 5;
+    z-index: 960;
     height:100%;
     left:10em;
     right:0px;
 }
 
-.garage{
+#garage{
     background-color: rgba(0, 0, 0, 0.20);
     height:auto;
     width:auto;
@@ -542,13 +554,13 @@ p.date{
     padding-top:1em;
     padding-right:1em;
 }
-.garage div{
+#garage div{
     display:inline;
 }
-.garage p{
+#garage p{
     color:white;
 }
-.garage .lot{
+#garage .lot{
     float:left;
     background-color: rgba(30, 30, 30, 0.20);
     width:5em;
@@ -560,8 +572,134 @@ p.date{
 
 .lot .vehicle{
     float:left;
-    background-color: #222222;
+    background-color: rgba(34, 34, 34, 0.80);
     width:100%;
     height:100%;
 }
 
+.Airplane{
+    background-image:url(images/plane1.png);
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.Boat{
+    background-image:url(images/boat.png);
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.Car{
+    background-image:url(images/car.png);
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+/*MODAL*/
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2000; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    user-select: none;
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    border-radius:5px;
+    display:flex;
+    flex-direction:column;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+ 
+.modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    text-align:center;
+}
+
+.modal-header p{
+    padding:0;
+    margin:0;
+    font-size:1.5em;
+}
+
+.modal-body {
+    padding: 2px 16px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    display:flex;
+    flex-direction: row;
+    align-items:flex-start;
+}
+
+.typeslist{
+    position:relative;
+}
+
+.typeslist select{
+    position:relative;
+    bottom:0;
+}
+
+.typeslist label{
+    position:relative;
+    top:0;
+    left:0;
+}

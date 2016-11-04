@@ -1,4 +1,5 @@
-﻿/// <reference path="C:\Users\MZALK\Source\Repos\GarageHTML\GarageHTML\Scripts/jquery-3.1.1.js" />
+﻿/// <reference path="C:\Users\elev\Source\Repos\GarageHTML\GarageHTML\Scripts/jquery-3.1.1.js" />
+
 // JavaScript source code
 var topPosition = $(window).scrollTop();
 var Garages = [];
@@ -8,10 +9,60 @@ var OldWidth = $("#Home1").height();
 var scrolledTo = 'Home';
 var rtime;
 var timeout = false;
-var delta = 0;
+var delta = 1;
 var selectedLot = null;
 var lotsCount = 0;
+var scrolledTooffset = 0;
 
+var newGaragebtn = document.getElementById("newGarage");
+
+var modal = document.getElementById('myModal');
+
+
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+newGaragebtn.onclick = function () {
+    showModal("<p>New Garage</p>",
+        "<div><label for='garageName'>Garage Name: </label><input type='text' id='garageName' placeholder='Garage Name'></div>"+
+            "<div class='typeslist'>"+
+                "<label for='garageType'>Garage Type: </label><select id='garageType' placeholder='Garage Type' size='5'>" +
+                    "<option value='Airplane' selected>Airplane</option>"+
+                    "<option value='Boat'>Boat</option>"+
+                    "<option value='Buss'>Buss</option>"+
+                    "<option value='Car'>Car</option>"+
+                    "<option value='Motorcycle'>Motorcycle</option>"+
+                "</select>"+
+            "</div>"+
+            "<input type='number' id='garageSize' min='1' max='9999' value='10'>",
+        "<div id='createGarage' class='button'>Create</div>");
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+function showModal(title, content, footer) {
+    var modalTitle = document.getElementById("modal-title");
+    var modalContent = document.getElementById("modal-body");
+    var modalFooter = document.getElementById("modal-footer");
+
+    modalTitle.innerHTML = title;
+    modalContent.innerHTML = content;
+    modalFooter.innerHTML = footer;
+
+    modal.style.display = "block";
+}
 
 if (window.attachEvent) {
     window.attachEvent('onload', loadscript);
@@ -58,11 +109,11 @@ function ParseGarages(xml) {
     var xmlDoc = xml.responseXML;
     var garageNodes = xmlDoc.getElementsByTagName("Garage");
     //console.log(garageNodes[0]);
-    
+
     for (var i = 0; i < garageNodes.length; i++) {
         var Vehicles = [];
         for (var j = 0; j < garageNodes[i].getElementsByTagName("Vehicle").length; j++) // garage vehicles
-        { 
+        {
             Vehicles.push(new Vehicle(garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("Type").toString().match(/\.(.*)/)[1].toString(), garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("Color").toString(), parseInt(garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("Wheels").toString()), garageNodes[i].getElementsByTagName("Vehicle")[j].getAttribute("RegNr").toString()));
         }
         var garageType = garageNodes[i].getAttribute("Type").toString().match(/\[(.*)/)[1].match(/\.(.*)/)[1].match(/[^\]]+/).toString(); // garage type parsed with RegEx
@@ -74,7 +125,7 @@ function ParseGarages(xml) {
             garageName,
             Vehicles));
 
-        $('#GaragesDropdown').html($('#GaragesDropdown').html() + "<div id=\"garage" + i + "\" class=\"button garageButton\" data-size=\"" + garageSpace + "\" data-index=\"" + i + "\">" + garageName + "</div>");
+        $('#GaragesDropdown').html($('#GaragesDropdown').html() + "<div id=\"garage" + i + "\" class=\"garageButton\" data-size=\"" + garageSpace + "\" data-index=\"" + i + "\">" + garageName + "</div>");
 
         //addVehicle();
         //Vehicles.length = 0;
@@ -95,71 +146,91 @@ function LoadPage() {
 
         $('#garage' + i).click(function (event) {
             $('#garage').html('');
-
-            jQuery.each($('.lot'), function (i, val) {
-                $(this).html('');
-            });
-
+            //console.log(this);
             SelectedGarageIndex = parseInt($(this).data('index'));
-            lotsCount = 0;
-            for (var j = 0; j < garagee.size ; j++) {
-                addLot();
-            }
-            //var index = $(this).data('index');
-            /*
-            jQuery.each(Garages[SelectedGarageIndex].vehicles, function (k, val) {
-                //console.log(k);
-                selectedLot = "lot" + k;
-            });
-            */
+            showLots();
             showVehicles();
         });
     });
-
-    /*
-    var buttons = document.getElementsByClassName("movieButton");
-    for (b in buttons) {
-        if (buttons.hasOwnProperty(b)) {
-            buttons[b].addEventListener("click", function () {
-                setHTMLtoMovie(this.id);
-            }, false);
-        }
-    }*/
-
-    //document.getElementById("movieTitle").innerHTML = movies[0].title;
-    //document.getElementById("movieDate").innerHTML = movies[0].date;
-    //document.getElementById("movieDiscription").innerHTML = movies[0].disctiption;
-    //document.getElementById("movieYoutube").setAttribute("src", movies[0].link);
 }
 
-function addLot(){
-    $('#garage').html($('#garage').html() + '<div id="lot' + lotsCount + '" class="lot"><div/>');
-
-    $('.lot').click(function (event) {
-        if (selectedLot == event.target.id)
-        {
-            $('#' + selectedLot).css({ 'background-color': 'rgba(30, 30, 30, 0.50)' });
-            $('.lot').css({ 'background-color': 'rgba(30, 30, 30, 0.20)' });
-            selectedLot = null; 
-        }
-        else
-        {
-            selectedLot = event.target.id;
-            $('.lot').css({ 'background-color': 'rgba(30, 30, 30, 0.20)' });
-            $('#' + selectedLot).css({ 'background-color': 'rgba(30, 30, 30, 0.50)' });
-        }
-    });
-    lotsCount += 1;
+function NewGarage() {
+    
 }
+/*
+function NewGarage() {
+    var garagename = $("#garageName").val();
+    var garagetype = $("#garageType").val();
+    var garagesize = $("#garageSize").val();
+
+    if (garagename != "" && garagetype != "" && garagesize != "") {
+        var newgarage = new Garage(garagetype, parseInt(garagesize), garagename);
+        Garages.push(newgarage);
+        $('#GaragesDropdown').html($('#GaragesDropdown').html() + "<div id=\"garage" + Garages.length + "\" class=\"garageButton\" data-size=\"" + newgarage.size + "\" data-index=\"" + Garages.length + "\">" + newgarage.name + "</div>");
+
+        $('#garage' + Garages.length).click(function (event) {
+            $('#garage').html('');
+            //console.log(this);
+
+            SelectedGarageIndex = parseInt($(this).data('index'));
+            showLots();
+            showVehicles();
+        });
+
+        $('#garage').html('');
+        SelectedGarageIndex = Garages.length - 1;
+        showLots();
+        showVehicles();
+
+        $('#vehiclecolor').val("#123456");
+        $("#garageName").val("");
+        $("#garageType").val("Airplane");
+        $("#garageSize").val("10");
+    }
+    else
+        alert("Missing info!");
+}*/
+
+function addLot() {
+    if (SelectedGarageIndex != null)
+    {
+        $('#garage').html($('#garage').html() + '<div id="lot' + lotsCount + '" class="lot"><div/>');
+
+        $('.lot').click(function (event) {
+            if (selectedLot == event.target.id) {
+                $('#' + selectedLot).css({ 'background-color': 'rgba(30, 30, 30, 0.50)' });
+                $('.lot').css({ 'background-color': 'rgba(30, 30, 30, 0.20)' });
+                selectedLot = null;
+            }
+            else if ($(event.target).attr('id') != null) {
+                selectedLot = $(event.target).attr('id');
+                $('.lot').css({ 'background-color': 'rgba(30, 30, 30, 0.20)' });
+                $('#' + selectedLot).css({ 'background-color': 'rgba(30, 30, 30, 0.50)' });
+            }
+            else {
+                selectedLot = $(event.target).parent().attr('id');
+                $('.lot').css({ 'background-color': 'rgba(30, 30, 30, 0.20)' });
+                $('#' + selectedLot).css({ 'background-color': 'rgba(30, 30, 30, 0.50)' });
+            }
+        });
+        lotsCount += 1;
+    }
+}
+
 
 function addVehicle() {
-    if (selectedLot != null)
-    {
-        if ($('#' + selectedLot + " .vehicle").length < 1)
-        {
-            $('#' + selectedLot).html('<div class="vehicle"><div/>');
-            Garages[SelectedGarageIndex].vehicles.push(new Vehicle("car", "white", "12", "asdf444", parseInt(selectedLot.match(/\d+/)[0])));
+    if (selectedLot != null) {
+        if ($('#' + selectedLot + " .vehicle").length < 1) {
+            var color = $('#vehiclecolor').val();
+            if (color == "#123456")
+                color = "transparent";
+            var newvehicle = new Vehicle(Garages[SelectedGarageIndex].type, color, "12", "asdf444", parseInt(selectedLot.match(/\d+/)[0]));
+            console.log(Garages[SelectedGarageIndex].type);
+            Garages[SelectedGarageIndex].vehicles.push(newvehicle);
+            $('#' + selectedLot).html('<div class="vehicle ' + newvehicle.type + '" style="background-color:' + newvehicle.color + ';"><div/>');
             $('#' + selectedLot).css({ 'background-color': 'rgba(30, 30, 30, 0.20)' });
+
+            $('#vehiclecolor').val("#123456");
         }
         else
             alert("Lot already contains vehicle!");
@@ -170,29 +241,34 @@ function addVehicle() {
     selectedLot = null;
 }
 
+function showLots() {
+    lotsCount = 0;
+    for (var j = 0; j < Garages[SelectedGarageIndex].size ; j++) {
+        addLot();
+    }
+}
+
 function showVehicles() {
-    jQuery.each(Garages[SelectedGarageIndex].vehicles, function (k, val) {
-        //console.log(k);
-        //selectedLot = "lot" + k;
-        if (this.lotnr > 0)
-            $('#lot' + this.lotnr).html('<div class="vehicle"><div/>');
-        else
-            $('#lot' + k).html('<div class="vehicle"><div/>');
-    });
-    console.log(Garages[SelectedGarageIndex].vehicles);
+    if (Garages[SelectedGarageIndex].hasOwnProperty('vehicles')) {
+        jQuery.each(Garages[SelectedGarageIndex].vehicles, function (k, val) {
+            //if(this.color.toString().substring < )
+            if (this.lotnr > 0)
+                $('#lot' + this.lotnr).html('<div class="vehicle ' + this.type + '" style="background-color:' + this.color + ';"><div/>');
+            else
+                $('#lot' + k).html('<div class="vehicle ' + this.type + '" style="background-color:' + this.color + ';"><div/>');
+        });
+    }
 }
 
 function loadscript() {
-    if (lotsCount == 0)
-    {
+    if (lotsCount == 0) {
         loadMovies();
         //DynamicSizingAndPositioning();
         //DynamicSizingAndPositioning();
-        
+
         $('#Home').click(function (event) {
             if (scrolledTo != event.target.id) {
-                if (scrolledTo != event.target.id && scrolledTo != "Garage")
-                {
+                if (scrolledTo != event.target.id && scrolledTo != "Garage") {
                     $('#contentWithLogo').animate({ scrollTop: $("#Home1").offset().top }, 'fast');
                     scrolledTo = event.target.id;
                 }
@@ -207,20 +283,18 @@ function loadscript() {
         });
 
         $('#AboutUs').click(function (event) {
-            if (scrolledTo != event.target.id && scrolledTo != "Garage")
-            {
+            if (scrolledTo != event.target.id && scrolledTo != "Garage") {
                 $('#contentWithLogo').animate(
                     { scrollTop: $("#AboutUs1").offset().top },
                     'fast',
                     "swing",
-                    function(){ 
+                    function () {
                         // animation complete
                     }
                 );
                 scrolledTo = event.target.id;
             }
-            else if(scrolledTo == "Garage")
-            {
+            else if (scrolledTo == "Garage") {
                 $('.contentContainer').animate({ scrollTop: $(".headerLogo").offset().top },
                     'fast',
                     'swing',
@@ -232,8 +306,7 @@ function loadscript() {
         });
 
         $('#Garage').click(function (event) {
-            if (scrolledTo != "Garage")
-            {
+            if (scrolledTo != "Garage") {
                 $('.contentContainer').animate({ scrollTop: $("#Garage1").offset().top },
                     'fast',
                     'swing',
@@ -242,6 +315,7 @@ function loadscript() {
                         console.log("should scroll!!!");
                     });
                 scrolledTo = event.target.id;
+                scrolledTooffset = $("#Garage1").offset().top;
             }
         });
 
@@ -257,8 +331,9 @@ function setSelectedLot(id) {
 $(window).resize(function () {
     rtime = new Date();
     if (timeout === false) {
-        timeout = true;
-        setTimeout(resizeend, delta);
+        //timeout = true;
+        //setTimeout(resizeend, delta);
+        //$("#Home").trigger('click');
     }
 });
 
@@ -269,33 +344,39 @@ function resizeend() {
         timeout = false; // timer function
 
         // needed functions
-        var NewHeight = $(this).height();
-        var NewWidth = $(this).width();
+        //var NewHeight = $(this).height();
+        //var NewWidth = $(this).width();
         //$('#content').scrollTo('#Home1');
         //DynamicSizingAndPositioning();
         // needed functions end
-        
+
     }
 }
 
 function DynamicSizingAndPositioning() {
-    $('.contentContainer').css({ 'top': $('.navbar').height() - 15, 'bottom': $('.footer').height() });
+    if (scrolledTo == "Garage") {
+        if (window.innerHeight < 600)
+            $('.contentContainer').animate({ scrollTop: $(".headerLogo").offset().top }, 'fast', 'swing',
+                        function () {
+                            $('#contentWithLogo').animate({ scrollTop: $("#AboutUs1").offset().top }, 'fast');
+                            scrolledTo = "";
+                        });
+        //$('.contentContainer').scrollTop($("#Garage1").offset().top);
+        //console.log("asd");
+    }
+
+    /*
+    $('.contentContainer').css({ 'top': $('.navbar').height(), 'bottom': $('.footer').height(), 'height': $(window).height() - $('.footer').height() - $('.navbar').height() });
     $('.header').css({ 'height': $('.navbar').height() });
 
     $("#Home1").css({ 'height': $(window).height() - $(".headerLogo").height() - $('.footer').height() - $('.navbar').height() });
-    $("#AboutUs1").css({ 'height': $(window).height() - $(".headerLogo").height() - $('.footer').height() - $('.navbar').height(), 'top': $("#Home1").height() });
+    $("#AboutUs1").css({ 'height': $(window).height() - $(".headerLogo").height() - $('.footer').height() - $('.navbar').height() });
 
-    $('#contentWithLogo').css({ 'top': $('.navbar').height() + $('.headerLogo').height(), 'height': $(window).height() - $('.footer').height() - $(".headerLogo").height() - $('.navbar').height(), 'bottom': $('.footer').height() });
+    $('#contentWithLogo').css({ 'top': '0', 'bottom': $('.footer').height(), 'height': $(window).height() - $(".headerLogo").height() - $('.footer').height() - $('.navbar').height() });
+    $('#Garage1').css({ 'height': $(window).height() - $('.footer').height() - $('.navbar').height() });
 
-    $('.leftContainer').css({ 'top': $('.navbar').height() - 15, 'height': $(window).height() - $('.footer').height() - $('.navbar').height() + 15 });
-    $('#Garage1').css({ 'top': $('#contentWithLogo').height() + $('.navbar').height() + $('.footer').height() + $('.headerLogo').height(), 'height': $(window).height() - $('.footer').height() - $('.navbar').height() });
-    
-    $('.leftContentContainer').css({ 'top': $('.navbar').height() - 15, 'height': $(window).height() - $('.footer').height() - $('.navbar').height() + 15, 'padding-top': $('.navbar').height() + 50 } );
     $('.garageContent').css({ 'top': $('.navbar').height(), 'height': $(window).height() - $('.footer').height() - $('.navbar').height(), 'width': $('.contentContainer').width() - $('.leftContainer').width(), 'left': $('.leftContainer').width() });
-    
-   // $(window).scrollTop(topPosition);
-    $('#contentWithLogo').scrollTop($('#contentWithLogo').height);
-
+    */
     //garageContent
 
 }
@@ -319,16 +400,17 @@ function setHTMLtoMovie(id) {
     }, 500);
 }
 
-function Garage(type, size, name, vehicles)
-{
+function Garage(type, size, name, vehicles) {
     this.type = type;
     this.size = size;
     this.name = name;
-    this.vehicles = vehicles;
+    if (vehicles == null)
+        this.vehicles = [];
+    else
+        this.vehicles = vehicles;
 }
 
-function Vehicle(type, color, wheels, regnr, lotnr)
-{
+function Vehicle(type, color, wheels, regnr, lotnr) {
     this.type = type;
     this.color = color;
     this.wheels = wheels;

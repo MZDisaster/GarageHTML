@@ -2,7 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <script src="Scripts/jquery-3.1.1.js"></script>
-    <script src="script.js"></script>
     <meta charset="utf-8" />
     <title>Garage | HomePage</title>
     <!--link href="bootstrap/css/bootstrap.css" rel="stylesheet" /-->
@@ -10,6 +9,49 @@
     <script type="text/javascript">
 
     </script>
+    <noscript>
+        <style>
+            .mainContainer {
+                display: none;
+            }
+
+            html, body {
+                background: #ffffff;
+                color: #ffffff;
+            }
+
+            @keyframes noscriptanimation {
+                0%   {background-color: #777777;}
+                100% {background-color: #333333;}
+            }
+
+            noscript{
+                position: fixed;
+                display: block;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 100%;
+                width: 100%;
+                background-color:#777777;
+            }
+
+            noscript, noscript > * {
+                display: block;
+                text-align:center;
+            }
+
+            #enableScript {
+                z-index: -1;
+                animation-name: noscriptanimation;
+                animation-duration: 1s;
+                animation-iteration-count: infinite;
+                animation-direction: alternate;
+            }
+        </style>
+
+    </noscript>
 </head>
 <body>
     <div class="mainContainer noselect">
@@ -74,14 +116,15 @@
             <div id="Garage1">
                 <div class="leftContainer">
                     <div class="leftContentContainer">
-                        <div class="button dropdown">Garages<div id="GaragesDropdown" class="dropdowncontainer"><div class="button">New Garage</div></div></div>
-
+                        <div class="button dropdown">Garages<div id="GaragesDropdown" class="dropdowncontainer"></div></div>
+                        <div class="button" id="newGarage">New Garage</div>
                         <div class="button" onclick="addLot();">Add Lot</div>
                         <div class="button" onclick="addVehicle();">Add Vehicle</div>
+                        <input type="color" id="vehiclecolor" value="#123456">
                     </div>
                 </div>
                 <div class="garageContent">
-                    <div id="garage" class="garage">
+                    <div id="garage" class="">
                             
                     </div>
                 </div>
@@ -92,5 +135,30 @@
             <p>© 2016</p>
         </div>
     </div>
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">×</span>
+                <p id="modal-title"></p>
+            </div>
+            <div id="modal-body" class="modal-body">
+
+            </div>
+            <div id="modal-footer" class="modal-footer">
+
+            </div>
+        </div>
+
+    </div>
+
+    <noscript>
+        <div id="enableScript" class="noselect">
+            <h1>
+                Thie site heavily depends on scripts to work, please enable them!
+            </h1>
+        </div>
+    </noscript>
+    <script src="script.js"></script>
 </body>
 </html>
