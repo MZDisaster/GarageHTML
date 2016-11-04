@@ -186,8 +186,8 @@ function loadscript() {
     if (lotsCount == 0)
     {
         loadMovies();
-        DynamicSizingAndPositioning();
-        DynamicSizingAndPositioning();
+        //DynamicSizingAndPositioning();
+        //DynamicSizingAndPositioning();
         
         $('#Home').click(function (event) {
             if (scrolledTo != event.target.id) {
@@ -197,7 +197,10 @@ function loadscript() {
                     scrolledTo = event.target.id;
                 }
                 else if (scrolledTo == "Garage") {
-                    $('#content').animate({ scrollTop: $("#Home1").offset().top }, 'fast');
+                    $('.contentContainer').animate({ scrollTop: $(".headerLogo").offset().top }, 'fast', 'swing',
+                        function () {
+                            //$('.contentContainer').animate({ scrollTop: $("#Home1").offset().top }, 'fast');
+                        });
                     scrolledTo = event.target.id;
                 }
             }
@@ -218,11 +221,11 @@ function loadscript() {
             }
             else if(scrolledTo == "Garage")
             {
-                $('#content').animate({ scrollTop: $("#AboutUs1").offset().top },
+                $('.contentContainer').animate({ scrollTop: $(".headerLogo").offset().top },
                     'fast',
                     'swing',
                     function () {
-                        $('#contentWithLogo').animate({ scrollTop: $("#AboutUs1").offset().top }, 'slow');
+                        $('#contentWithLogo').animate({ scrollTop: $("#AboutUs1").offset().top }, 'fast');
                     });
                 scrolledTo = event.target.id;
             }
@@ -231,11 +234,12 @@ function loadscript() {
         $('#Garage').click(function (event) {
             if (scrolledTo != "Garage")
             {
-                $('#content').animate({ scrollTop: $("#Garage1").offset().top },
+                $('.contentContainer').animate({ scrollTop: $("#Garage1").offset().top },
                     'fast',
                     'swing',
                     function () {
-                        $('#contentWithLogo').animate({ scrollTop: $("#AboutUs1").offset().top }, 'slow');
+                        $('#contentWithLogo').animate({ scrollTop: $("#Home1").offset().top }, 'fast');
+                        console.log("should scroll!!!");
                     });
                 scrolledTo = event.target.id;
             }
@@ -268,7 +272,7 @@ function resizeend() {
         var NewHeight = $(this).height();
         var NewWidth = $(this).width();
         //$('#content').scrollTo('#Home1');
-        DynamicSizingAndPositioning();
+        //DynamicSizingAndPositioning();
         // needed functions end
         
     }

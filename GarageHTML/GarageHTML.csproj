@@ -72,6 +72,7 @@
     <Content Include="images\images3.jpg" />
     <Content Include="images\imgres1.jpg" />
     <Content Include="images\imgres2.jpg" />
+    <Content Include="index2.html" />
     <Content Include="objects.xml" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
